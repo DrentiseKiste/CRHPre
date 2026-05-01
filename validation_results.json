@@ -1,0 +1,41 @@
+{
+    "train_end_year": 2020,
+    "val_start_year": 2021,
+    "val_end_year": 2025,
+    "train_pairs": 56,
+    "val_true_pairs": 21,
+    "train_samples": 224,
+    "val_samples": 84,
+    "auc_roc": 0.9236583522297808,
+    "accuracy": 0.8333333333333334,
+    "precision_1": 0.8181818181818182,
+    "recall_1": 0.42857142857142855,
+    "f1_1": 0.5625,
+    "classification_report": {
+        "0": {
+            "precision": 0.8356164383561644,
+            "recall": 0.9682539682539683,
+            "f1-score": 0.8970588235294118,
+            "support": 63.0
+        },
+        "1": {
+            "precision": 0.8181818181818182,
+            "recall": 0.42857142857142855,
+            "f1-score": 0.5625,
+            "support": 21.0
+        },
+        "accuracy": 0.8333333333333334,
+        "macro avg": {
+            "precision": 0.8268991282689913,
+            "recall": 0.6984126984126984,
+            "f1-score": 0.7297794117647058,
+            "support": 84.0
+        },
+        "weighted avg": {
+            "precision": 0.8312577833125778,
+            "recall": 0.8333333333333334,
+            "f1-score": 0.8134191176470589,
+            "support": 84.0
+        }
+    }
+}

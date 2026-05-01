@@ -1,0 +1,219 @@
+{
+    "validation": {
+        "train_end_year": 2020,
+        "val_start_year": 2021,
+        "val_end_year": 2025,
+        "train_pairs": 56,
+        "val_true_pairs": 21,
+        "train_samples": 224,
+        "val_samples": 84,
+        "auc_roc": 0.9236583522297808,
+        "accuracy": 0.8333333333333334,
+        "precision_1": 0.8181818181818182,
+        "recall_1": 0.42857142857142855,
+        "f1_1": 0.5625,
+        "classification_report": {
+            "0": {
+                "precision": 0.8356164383561644,
+                "recall": 0.9682539682539683,
+                "f1-score": 0.8970588235294118,
+                "support": 63.0
+            },
+            "1": {
+                "precision": 0.8181818181818182,
+                "recall": 0.42857142857142855,
+                "f1-score": 0.5625,
+                "support": 21.0
+            },
+            "accuracy": 0.8333333333333334,
+            "macro avg": {
+                "precision": 0.8268991282689913,
+                "recall": 0.6984126984126984,
+                "f1-score": 0.7297794117647058,
+                "support": 84.0
+            },
+            "weighted avg": {
+                "precision": 0.8312577833125778,
+                "recall": 0.8333333333333334,
+                "f1-score": 0.8134191176470589,
+                "support": 84.0
+            }
+        }
+    },
+    "predictions_summary": {
+        "2026": {
+            "count": 94,
+            "top_5": [
+                {
+                    "city_a": "衢州",
+                    "city_b": "温州",
+                    "probability": 0.9968208074569702
+                },
+                {
+                    "city_a": "西安",
+                    "city_b": "十堰",
+                    "probability": 0.9965440630912781
+                },
+                {
+                    "city_a": "济南",
+                    "city_b": "临沂",
+                    "probability": 0.9961477518081665
+                },
+                {
+                    "city_a": "长春",
+                    "city_b": "沈阳",
+                    "probability": 0.9956236481666565
+                },
+                {
+                    "city_a": "南昌",
+                    "city_b": "黄山",
+                    "probability": 0.9953863024711609
+                }
+            ]
+        },
+        "2027": {
+            "count": 13,
+            "top_5": [
+                {
+                    "city_a": "孝感",
+                    "city_b": "池州",
+                    "probability": 0.9875624179840088
+                },
+                {
+                    "city_a": "南京",
+                    "city_b": "黄山",
+                    "probability": 0.979701042175293
+                },
+                {
+                    "city_a": "扬州",
+                    "city_b": "黄山",
+                    "probability": 0.9772914052009583
+                },
+                {
+                    "city_a": "南京",
+                    "city_b": "衢州",
+                    "probability": 0.9765968918800354
+                },
+                {
+                    "city_a": "池州",
+                    "city_b": "阜阳",
+                    "probability": 0.9760316014289856
+                }
+            ]
+        },
+        "2028": {
+            "count": 7,
+            "top_5": [
+                {
+                    "city_a": "天津",
+                    "city_b": "濮阳",
+                    "probability": 0.9694575071334839
+                },
+                {
+                    "city_a": "南昌",
+                    "city_b": "黄石",
+                    "probability": 0.9533255696296692
+                },
+                {
+                    "city_a": "大连",
+                    "city_b": "济南",
+                    "probability": 0.9421870708465576
+                },
+                {
+                    "city_a": "南昌",
+                    "city_b": "荆州",
+                    "probability": 0.9231420159339905
+                },
+                {
+                    "city_a": "承德",
+                    "city_b": "秦皇岛",
+                    "probability": 0.9080273509025574
+                }
+            ]
+        },
+        "2029": {
+            "count": 35,
+            "top_5": [
+                {
+                    "city_a": "濮阳",
+                    "city_b": "阜阳",
+                    "probability": 0.9955447316169739
+                },
+                {
+                    "city_a": "遵义",
+                    "city_b": "万州",
+                    "probability": 0.9954728484153748
+                },
+                {
+                    "city_a": "大连",
+                    "city_b": "丹东",
+                    "probability": 0.9916185736656189
+                },
+                {
+                    "city_a": "孝感",
+                    "city_b": "阜阳",
+                    "probability": 0.9912675023078918
+                },
+                {
+                    "city_a": "石家庄",
+                    "city_b": "呼和浩特",
+                    "probability": 0.9895681738853455
+                }
+            ]
+        },
+        "2030": {
+            "count": 5,
+            "top_5": [
+                {
+                    "city_a": "重庆",
+                    "city_b": "遵义",
+                    "probability": 0.9724117517471313
+                },
+                {
+                    "city_a": "重庆",
+                    "city_b": "宜宾",
+                    "probability": 0.9724117517471313
+                },
+                {
+                    "city_a": "海口",
+                    "city_b": "玉林",
+                    "probability": 0.9158610105514526
+                },
+                {
+                    "city_a": "苏州",
+                    "city_b": "金华",
+                    "probability": 0.9155898094177246
+                },
+                {
+                    "city_a": "佛山",
+                    "city_b": "东莞",
+                    "probability": 0.9073446393013
+                }
+            ]
+        }
+    },
+    "feature_names": [
+        "gdp_sum",
+        "gdp_product",
+        "pop_sum",
+        "pop_product",
+        "economic_gravity",
+        "avg_gdp_per_capita",
+        "distance_km",
+        "log_distance",
+        "is_golden_distance",
+        "is_short_distance",
+        "is_long_distance",
+        "admin_max",
+        "admin_min",
+        "admin_gap",
+        "both_east",
+        "one_east",
+        "same_province",
+        "same_agglomeration",
+        "max_connections",
+        "sum_connections",
+        "common_neighbors",
+        "is_cross_sea"
+    ]
+}
