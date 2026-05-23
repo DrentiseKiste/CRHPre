@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中国高铁全量路线图 (2008-2030)</title>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>if(typeof L==='undefined'){document.write('<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"><\/script>');}</script>
+<style>
+  body { margin:0; padding:0; font-family: "Microsoft YaHei", sans-serif; }
+  #map { width:100vw; height:100vh; background:#e8e8e8; }
+  .info-panel {
+    position:fixed; top:10px; left:50px; z-index:9999;
+    background:white; padding:15px; border:2px solid #333;
+    border-radius:5px; font-size:14px; max-width:300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .info-panel h3 { margin:0 0 8px 0; color:#2c3e50; font-size:16px; }
+  .legend { color:#555; font-size:12px; margin-top:6px; line-height:1.8; }
+  .legend-line { display:flex; align-items:center; gap:8px; }
+  .legend-swatch { width:16px; height:16px; border-radius:3px; display:inline-block; flex-shrink:0; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="info-panel">
+  <h3>🚄 中国高铁全量路线图 (2008-2030)</h3>
+  <div class="legend">
+    <div class="legend-line">
+      <span class="legend-swatch" style="background:#666"></span> 灰色=当年建成线路
+    </div>
+    <div class="legend-line">
+      <span class="legend-swatch" style="background:#e41a1c"></span> 红色虚线=当年预测 (Top5)
+    </div>
+    <div style="font-size:11px;color:#999;margin-top:4px;">
+      💡 右侧勾选年份查看 · 默认仅显示城市
+    </div>
+  </div>
+</div>
+
+<script>
+if (typeof L === 'undefined') {
+  document.getElementById('map').innerHTML =
+    '<div style="text-align:center;padding-top:200px;font-size:18px;color:#c00;">'+
+    '⚠️ 地图库加载失败<br><span style="font-size:14px;color:#666;">请用浏览器直接打开此HTML文件</span></div>';
+} else {
+
+var map = L.map('map', {zoomControl: true}).setView([35, 105], 5);
+
+var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://osm.org">OSM</a>',
+  maxZoom: 12,
+  subdomains: 'abc'
+}).addTo(map);
+
+tileLayer.on('tileerror', function() {
+  if (!tileLayer._fallbackTried) {
+    tileLayer._fallbackTried = true;
+    tileLayer.setUrl('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png');
+  }
+});
+
+var cityGroup = L.layerGroup().addTo(map);
+
+    L.circleMarker([39.9042,116.4074], {
+        radius: 11.2, color: "#d62728", fillColor: "#d62728",
+        fillOpacity: 0.7
+    }).bindPopup("<b>北京</b><br>GDP: 43760亿")
+      .addTo(cityGroup);
+    L.circleMarker([31.2304,121.4737], {
+        radius: 12.3, color: "#d62728", fillColor: "#d62728",
+        fillOpacity: 0.7
+    }).bindPopup("<b>上海</b><br>GDP: 47218亿")
+      .addTo(cityGroup);
+    L.circleMarker([39.0842,117.201], {
+        radius: 8.2, color: "#d62728", fillColor: "#d62728",
+        fillOpacity: 0.7
+    }).bindPopup("<b>天津</b><br>GDP: 16311亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.563,106.5516], {
+        radius: 15.0, color: "#d62728", fillColor: "#d62728",
+        fillOpacity: 0.7
+    }).bindPopup("<b>重庆</b><br>GDP: 30145亿")
+      .addTo(cityGroup);
+    L.circleMarker([22.3193,114.1694], {
+        radius: 5.8, color: "#9467bd", fillColor: "#9467bd",
+        fillOpacity: 0.7
+    }).bindPopup("<b>香港</b><br>GDP: 24280亿")
+      .addTo(cityGroup);
+    L.circleMarker([22.1987,113.5439], {
+        radius: 3.3, color: "#9467bd", fillColor: "#9467bd",
+        fillOpacity: 0.7
+    }).bindPopup("<b>澳门</b><br>GDP: 1929亿")
+      .addTo(cityGroup);
+    L.circleMarker([25.033,121.5654], {
+        radius: 4.0, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>台北</b><br>GDP: 5500亿")
+      .addTo(cityGroup);
+    L.circleMarker([24.1477,120.6736], {
+        radius: 4.1, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>台中</b><br>GDP: 3200亿")
+      .addTo(cityGroup);
+    L.circleMarker([22.6273,120.3014], {
+        radius: 4.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>高雄</b><br>GDP: 2800亿")
+      .addTo(cityGroup);
+    L.circleMarker([23.1291,113.2644], {
+        radius: 10.0, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>广州</b><br>GDP: 28839亿")
+      .addTo(cityGroup);
+    L.circleMarker([22.5431,114.0579], {
+        radius: 9.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>深圳</b><br>GDP: 34606亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.5728,104.0668], {
+        radius: 10.9, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>成都</b><br>GDP: 22074亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.5928,114.3055], {
+        radius: 8.1, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>武汉</b><br>GDP: 20011亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.3416,108.9398], {
+        radius: 7.9, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>西安</b><br>GDP: 12010亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.7466,113.6253], {
+        radius: 7.8, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>郑州</b><br>GDP: 13617亿")
+      .addTo(cityGroup);
+    L.circleMarker([32.0603,118.7969], {
+        radius: 6.5, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>南京</b><br>GDP: 17421亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.2741,120.1551], {
+        radius: 7.6, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>杭州</b><br>GDP: 20059亿")
+      .addTo(cityGroup);
+    L.circleMarker([26.0745,119.2965], {
+        radius: 6.1, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>福州</b><br>GDP: 12698亿")
+      .addTo(cityGroup);
+    L.circleMarker([24.4798,118.0894], {
+        radius: 5.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>厦门</b><br>GDP: 7802亿")
+      .addTo(cityGroup);
+    L.circleMarker([25.0389,102.7183], {
+        radius: 6.2, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>昆明</b><br>GDP: 7541亿")
+      .addTo(cityGroup);
+    L.circleMarker([26.647,106.6302], {
+        radius: 5.3, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>贵阳</b><br>GDP: 5154亿")
+      .addTo(cityGroup);
+    L.circleMarker([22.817,108.3665], {
+        radius: 6.3, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>南宁</b><br>GDP: 5120亿")
+      .addTo(cityGroup);
+    L.circleMarker([20.044,110.1999], {
+        radius: 4.1, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>海口</b><br>GDP: 2057亿")
+      .addTo(cityGroup);
+    L.circleMarker([36.0611,103.8343], {
+        radius: 4.6, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>兰州</b><br>GDP: 3387亿")
+      .addTo(cityGroup);
+    L.circleMarker([43.8256,87.6168], {
+        radius: 4.5, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>乌鲁木齐</b><br>GDP: 3893亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.65,91.1], {
+        radius: 3.3, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>拉萨</b><br>GDP: 850亿")
+      .addTo(cityGroup);
+    L.circleMarker([45.8038,126.535], {
+        radius: 6.7, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>哈尔滨</b><br>GDP: 5351亿")
+      .addTo(cityGroup);
+    L.circleMarker([43.8171,125.3235], {
+        radius: 6.4, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>长春</b><br>GDP: 6638亿")
+      .addTo(cityGroup);
+    L.circleMarker([41.8057,123.4315], {
+        radius: 6.4, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>沈阳</b><br>GDP: 8122亿")
+      .addTo(cityGroup);
+    L.circleMarker([38.914,121.6147], {
+        radius: 5.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>大连</b><br>GDP: 8752亿")
+      .addTo(cityGroup);
+    L.circleMarker([36.6512,117.1201], {
+        radius: 6.5, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>济南</b><br>GDP: 12027亿")
+      .addTo(cityGroup);
+    L.circleMarker([36.0671,120.3826], {
+        radius: 6.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>青岛</b><br>GDP: 14920亿")
+      .addTo(cityGroup);
+    L.circleMarker([38.0428,114.5149], {
+        radius: 7.2, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>石家庄</b><br>GDP: 7100亿")
+      .addTo(cityGroup);
+    L.circleMarker([37.8706,112.5489], {
+        radius: 5.0, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>太原</b><br>GDP: 5121亿")
+      .addTo(cityGroup);
+    L.circleMarker([31.8206,117.2272], {
+        radius: 6.6, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>合肥</b><br>GDP: 12013亿")
+      .addTo(cityGroup);
+    L.circleMarker([28.682,115.8579], {
+        radius: 5.4, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>南昌</b><br>GDP: 7203亿")
+      .addTo(cityGroup);
+    L.circleMarker([28.2282,112.9388], {
+        radius: 6.9, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>长沙</b><br>GDP: 14331亿")
+      .addTo(cityGroup);
+    L.circleMarker([40.8414,111.7519], {
+        radius: 4.3, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>呼和浩特</b><br>GDP: 3800亿")
+      .addTo(cityGroup);
+    L.circleMarker([38.4872,106.2309], {
+        radius: 4.1, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>银川</b><br>GDP: 2260亿")
+      .addTo(cityGroup);
+    L.circleMarker([36.6171,101.7782], {
+        radius: 3.9, color: "#ff7f0e", fillColor: "#ff7f0e",
+        fillOpacity: 0.7
+    }).bindPopup("<b>西宁</b><br>GDP: 1644亿")
+      .addTo(cityGroup);
+    L.circleMarker([40.6582,109.8403], {
+        radius: 4.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>包头</b><br>GDP: 3750亿")
+      .addTo(cityGroup);
+    L.circleMarker([39.6083,109.781], {
+        radius: 3.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>鄂尔多斯</b><br>GDP: 5800亿")
+      .addTo(cityGroup);
+    L.circleMarker([39.6292,118.1802], {
+        radius: 5.9, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>唐山</b><br>GDP: 8900亿")
+      .addTo(cityGroup);
+    L.circleMarker([31.2989,120.5853], {
+        radius: 7.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>苏州</b><br>GDP: 23958亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.8683,121.544], {
+        radius: 6.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>宁波</b><br>GDP: 15704亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.7461,120.7555], {
+        radius: 5.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>嘉兴</b><br>GDP: 7062亿")
+      .addTo(cityGroup);
+    L.circleMarker([23.0218,113.1219], {
+        radius: 6.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>佛山</b><br>GDP: 12698亿")
+      .addTo(cityGroup);
+    L.circleMarker([23.0473,113.7518], {
+        radius: 6.9, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>东莞</b><br>GDP: 11200亿")
+      .addTo(cityGroup);
+    L.circleMarker([22.2707,113.567], {
+        radius: 3.9, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>珠海</b><br>GDP: 4233亿")
+      .addTo(cityGroup);
+    L.circleMarker([23.0467,112.4659], {
+        radius: 4.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>肇庆</b><br>GDP: 2700亿")
+      .addTo(cityGroup);
+    L.circleMarker([31.4675,104.6796], {
+        radius: 4.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>绵阳</b><br>GDP: 3600亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.5823,103.7665], {
+        radius: 4.2, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>乐山</b><br>GDP: 2200亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.5808,105.058], {
+        radius: 4.2, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>内江</b><br>GDP: 1650亿")
+      .addTo(cityGroup);
+    L.circleMarker([36.8135,118.055], {
+        radius: 4.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>淄博</b><br>GDP: 4400亿")
+      .addTo(cityGroup);
+    L.circleMarker([36.7089,119.1619], {
+        radius: 6.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>潍坊</b><br>GDP: 7300亿")
+      .addTo(cityGroup);
+    L.circleMarker([37.4638,121.4481], {
+        radius: 5.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>烟台</b><br>GDP: 8712亿")
+      .addTo(cityGroup);
+    L.circleMarker([46.5893,125.1036], {
+        radius: 4.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>大庆</b><br>GDP: 2600亿")
+      .addTo(cityGroup);
+    L.circleMarker([43.8378,126.5494], {
+        radius: 4.4, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>吉林</b><br>GDP: 1550亿")
+      .addTo(cityGroup);
+    L.circleMarker([43.1703,124.3503], {
+        radius: 3.7, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>四平</b><br>GDP: 580亿")
+      .addTo(cityGroup);
+    L.circleMarker([25.4541,119.0077], {
+        radius: 4.2, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>莆田</b><br>GDP: 3100亿")
+      .addTo(cityGroup);
+    L.circleMarker([24.8744,118.6757], {
+        radius: 6.3, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>泉州</b><br>GDP: 12103亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.7972,114.3076], {
+        radius: 4.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>开封</b><br>GDP: 2500亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.6187,112.454], {
+        radius: 5.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>洛阳</b><br>GDP: 5800亿")
+      .addTo(cityGroup);
+    L.circleMarker([35.303,113.9268], {
+        radius: 5.3, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>新乡</b><br>GDP: 3400亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.1997,115.0389], {
+        radius: 3.9, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>黄石</b><br>GDP: 1900亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.9279,113.9109], {
+        radius: 4.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>孝感</b><br>GDP: 2600亿")
+      .addTo(cityGroup);
+    L.circleMarker([27.8274,113.134], {
+        radius: 4.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>株洲</b><br>GDP: 3400亿")
+      .addTo(cityGroup);
+    L.circleMarker([27.8297,112.9443], {
+        radius: 4.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>湘潭</b><br>GDP: 2700亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.7051,116.0019], {
+        radius: 4.7, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>九江</b><br>GDP: 4000亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.3296,108.7089], {
+        radius: 4.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>咸阳</b><br>GDP: 2800亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.363,107.237], {
+        radius: 4.2, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>宝鸡</b><br>GDP: 2600亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.4996,109.5098], {
+        radius: 4.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>渭南</b><br>GDP: 1900亿")
+      .addTo(cityGroup);
+    L.circleMarker([36.545,104.1385], {
+        radius: 3.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>白银</b><br>GDP: 620亿")
+      .addTo(cityGroup);
+    L.circleMarker([21.4813,109.1002], {
+        radius: 3.7, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>北海</b><br>GDP: 1700亿")
+      .addTo(cityGroup);
+    L.circleMarker([21.9797,108.6542], {
+        radius: 4.2, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>钦州</b><br>GDP: 1650亿")
+      .addTo(cityGroup);
+    L.circleMarker([21.6869,108.3547], {
+        radius: 3.4, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>防城港</b><br>GDP: 900亿")
+      .addTo(cityGroup);
+    L.circleMarker([27.7254,106.9274], {
+        radius: 5.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>遵义</b><br>GDP: 4500亿")
+      .addTo(cityGroup);
+    L.circleMarker([26.2533,105.9476], {
+        radius: 3.9, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>安顺</b><br>GDP: 1100亿")
+      .addTo(cityGroup);
+    L.circleMarker([24.3505,102.5439], {
+        radius: 3.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>玉溪</b><br>GDP: 2300亿")
+      .addTo(cityGroup);
+    L.circleMarker([25.49,103.7961], {
+        radius: 5.2, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>曲靖</b><br>GDP: 3600亿")
+      .addTo(cityGroup);
+    L.circleMarker([44.0142,87.2675], {
+        radius: 3.6, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>昌吉</b><br>GDP: 1700亿")
+      .addTo(cityGroup);
+    L.circleMarker([44.3059,86.0806], {
+        radius: 3.2, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>石河子</b><br>GDP: 750亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.6004,119.1792], {
+        radius: 4.7, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>连云港</b><br>GDP: 4000亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.261,117.1848], {
+        radius: 6.4, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>徐州</b><br>GDP: 8900亿")
+      .addTo(cityGroup);
+    L.circleMarker([21.2707,110.3594], {
+        radius: 5.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>湛江</b><br>GDP: 3700亿")
+      .addTo(cityGroup);
+    L.circleMarker([25.8311,114.9348], {
+        radius: 6.4, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>赣州</b><br>GDP: 4200亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.0316,111.6985], {
+        radius: 5.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>常德</b><br>GDP: 4200亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.1171,110.4792], {
+        radius: 3.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>张家界</b><br>GDP: 600亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.5335,108.7707], {
+        radius: 3.2, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>黔江</b><br>GDP: 280亿")
+      .addTo(cityGroup);
+    L.circleMarker([25.2742,110.2993], {
+        radius: 4.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>桂林</b><br>GDP: 2400亿")
+      .addTo(cityGroup);
+    L.circleMarker([23.9023,106.6183], {
+        radius: 4.3, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>百色</b><br>GDP: 1850亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.0791,119.6494], {
+        radius: 5.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>金华</b><br>GDP: 6000亿")
+      .addTo(cityGroup);
+    L.circleMarker([28.9359,118.8743], {
+        radius: 3.9, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>衢州</b><br>GDP: 2000亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.5319,117.1151], {
+        radius: 4.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>安庆</b><br>GDP: 2800亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.3352,112.2396], {
+        radius: 5.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>荆州</b><br>GDP: 3000亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.6919,111.2864], {
+        radius: 4.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>宜昌</b><br>GDP: 6100亿")
+      .addTo(cityGroup);
+    L.circleMarker([35.1046,118.3564], {
+        radius: 7.1, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>临沂</b><br>GDP: 6100亿")
+      .addTo(cityGroup);
+    L.circleMarker([33.6104,119.0158], {
+        radius: 4.7, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>淮安</b><br>GDP: 4800亿")
+      .addTo(cityGroup);
+    L.circleMarker([32.3932,119.421], {
+        radius: 4.7, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>扬州</b><br>GDP: 7100亿")
+      .addTo(cityGroup);
+    L.circleMarker([29.7147,118.3375], {
+        radius: 3.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>黄山</b><br>GDP: 1000亿")
+      .addTo(cityGroup);
+    L.circleMarker([44.4123,131.1514], {
+        radius: 3.0, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>绥芬河</b><br>GDP: 150亿")
+      .addTo(cityGroup);
+    L.circleMarker([44.5514,129.633], {
+        radius: 3.9, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>牡丹江</b><br>GDP: 900亿")
+      .addTo(cityGroup);
+    L.circleMarker([47.3543,123.9179], {
+        radius: 4.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>齐齐哈尔</b><br>GDP: 1300亿")
+      .addTo(cityGroup);
+    L.circleMarker([49.2122,119.7658], {
+        radius: 3.1, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>海拉尔</b><br>GDP: 200亿")
+      .addTo(cityGroup);
+    L.circleMarker([49.5978,117.3786], {
+        radius: 3.1, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>满洲里</b><br>GDP: 170亿")
+      .addTo(cityGroup);
+    L.circleMarker([39.05,115.9], {
+        radius: 3.4, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>雄安</b><br>GDP: 300亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.83,108.32], {
+        radius: 3.7, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>万州</b><br>GDP: 1000亿")
+      .addTo(cityGroup);
+    L.circleMarker([18.2208,109.5028], {
+        radius: 3.4, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>三亚</b><br>GDP: 835亿")
+      .addTo(cityGroup);
+    L.circleMarker([40.1272,124.3764], {
+        radius: 3.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>丹东</b><br>GDP: 854亿")
+      .addTo(cityGroup);
+    L.circleMarker([46.8139,130.3467], {
+        radius: 3.8, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>佳木斯</b><br>GDP: 810亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.2943,108.9388], {
+        radius: 3.3, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>利川</b><br>GDP: 245亿")
+      .addTo(cityGroup);
+    L.circleMarker([32.65,110.78], {
+        radius: 4.2, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>十堰</b><br>GDP: 2300亿")
+      .addTo(cityGroup);
+    L.circleMarker([34.4422,115.6478], {
+        radius: 5.9, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>商丘</b><br>GDP: 3262亿")
+      .addTo(cityGroup);
+    L.circleMarker([31.5167,121.1167], {
+        radius: 3.3, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>太仓</b><br>GDP: 1650亿")
+      .addTo(cityGroup);
+    L.circleMarker([28.7667,104.6167], {
+        radius: 4.7, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>宜宾</b><br>GDP: 3400亿")
+      .addTo(cityGroup);
+    L.circleMarker([35.13,115.48], {
+        radius: 3.0, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>庄寨</b><br>GDP: 50亿")
+      .addTo(cityGroup);
+    L.circleMarker([36.6056,109.4644], {
+        radius: 3.9, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>延安</b><br>GDP: 2200亿")
+      .addTo(cityGroup);
+    L.circleMarker([40.825,114.885], {
+        radius: 4.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>张家口</b><br>GDP: 1700亿")
+      .addTo(cityGroup);
+    L.circleMarker([24.4,103.4333], {
+        radius: 3.2, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>弥勒</b><br>GDP: 474亿")
+      .addTo(cityGroup);
+    L.circleMarker([27.58,109.98], {
+        radius: 4.7, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>怀化</b><br>GDP: 1800亿")
+      .addTo(cityGroup);
+    L.circleMarker([40.97,117.94], {
+        radius: 4.3, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>承德</b><br>GDP: 1700亿")
+      .addTo(cityGroup);
+    L.circleMarker([35.42,119.46], {
+        radius: 4.1, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>日照</b><br>GDP: 2300亿")
+      .addTo(cityGroup);
+    L.circleMarker([35.59,116.98], {
+        radius: 3.2, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>曲阜</b><br>GDP: 400亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.58,114.28], {
+        radius: 3.0, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>汉口</b><br>GDP: 0亿")
+      .addTo(cityGroup);
+    L.circleMarker([23.35,116.68], {
+        radius: 5.1, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>汕头</b><br>GDP: 3000亿")
+      .addTo(cityGroup);
+    L.circleMarker([22.8,115.35], {
+        radius: 4.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>汕尾</b><br>GDP: 1300亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.66,117.48], {
+        radius: 3.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>池州</b><br>GDP: 1000亿")
+      .addTo(cityGroup);
+    L.circleMarker([28.02,120.65], {
+        radius: 6.6, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>温州</b><br>GDP: 8000亿")
+      .addTo(cityGroup);
+    L.circleMarker([30.86,120.11], {
+        radius: 4.3, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>湖州</b><br>GDP: 3800亿")
+      .addTo(cityGroup);
+    L.circleMarker([39.02,117.72], {
+        radius: 3.8, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>滨海新区</b><br>GDP: 8700亿")
+      .addTo(cityGroup);
+    L.circleMarker([35.71,115.01], {
+        radius: 4.4, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>濮阳</b><br>GDP: 1760亿")
+      .addTo(cityGroup);
+    L.circleMarker([22.63,110.15], {
+        radius: 5.2, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>玉林</b><br>GDP: 2000亿")
+      .addTo(cityGroup);
+    L.circleMarker([42.87,130.35], {
+        radius: 3.1, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>珲春</b><br>GDP: 160亿")
+      .addTo(cityGroup);
+    L.circleMarker([39.93,119.59], {
+        radius: 4.2, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>秦皇岛</b><br>GDP: 1800亿")
+      .addTo(cityGroup);
+    L.circleMarker([37.1,122.41], {
+        radius: 3.3, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>荣成</b><br>GDP: 1000亿")
+      .addTo(cityGroup);
+    L.circleMarker([23.33,103.43], {
+        radius: 3.2, color: "#1f77b4", fillColor: "#1f77b4",
+        fillOpacity: 0.7
+    }).bindPopup("<b>蒙自</b><br>GDP: 400亿")
+      .addTo(cityGroup);
+    L.circleMarker([26.89,112.59], {
+        radius: 5.5, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>衡阳</b><br>GDP: 3800亿")
+      .addTo(cityGroup);
+    L.circleMarker([32.0,112.15], {
+        radius: 5.0, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>襄阳</b><br>GDP: 5800亿")
+      .addTo(cityGroup);
+    L.circleMarker([32.89,115.81], {
+        radius: 6.1, color: "#2ca02c", fillColor: "#2ca02c",
+        fillOpacity: 0.7
+    }).bindPopup("<b>阜阳</b><br>GDP: 3200亿")
+      .addTo(cityGroup);
+
+var overlayLayers = {};
+
+
+var histGroup2008 = L.layerGroup();
+overlayLayers['2008年 历史 (1条)'] = histGroup2008;
+var histGroup2009 = L.layerGroup();
+overlayLayers['2009年 历史 (5条)'] = histGroup2009;
+var histGroup2010 = L.layerGroup();
+overlayLayers['2010年 历史 (5条)'] = histGroup2010;
+var histGroup2011 = L.layerGroup();
+overlayLayers['2011年 历史 (2条)'] = histGroup2011;
+var histGroup2012 = L.layerGroup();
+overlayLayers['2012年 历史 (3条)'] = histGroup2012;
+var histGroup2013 = L.layerGroup();
+overlayLayers['2013年 历史 (6条)'] = histGroup2013;
+var histGroup2014 = L.layerGroup();
+overlayLayers['2014年 历史 (5条)'] = histGroup2014;
+var histGroup2015 = L.layerGroup();
+overlayLayers['2015年 历史 (7条)'] = histGroup2015;
+var histGroup2016 = L.layerGroup();
+overlayLayers['2016年 历史 (3条)'] = histGroup2016;
+var histGroup2017 = L.layerGroup();
+overlayLayers['2017年 历史 (4条)'] = histGroup2017;
+var histGroup2018 = L.layerGroup();
+overlayLayers['2018年 历史 (5条)'] = histGroup2018;
+var histGroup2019 = L.layerGroup();
+overlayLayers['2019年 历史 (7条)'] = histGroup2019;
+var histGroup2020 = L.layerGroup();
+overlayLayers['2020年 历史 (4条)'] = histGroup2020;
+var histGroup2021 = L.layerGroup();
+overlayLayers['2021年 历史 (6条)'] = histGroup2021;
+var histGroup2022 = L.layerGroup();
+overlayLayers['2022年 历史 (5条)'] = histGroup2022;
+var histGroup2023 = L.layerGroup();
+overlayLayers['2023年 历史 (6条)'] = histGroup2023;
+var histGroup2024 = L.layerGroup();
+overlayLayers['2024年 历史 (4条)'] = histGroup2024;
+var histGroup2025 = L.layerGroup();
+overlayLayers['2025年 历史 (2条)'] = histGroup2025;
+
+(function() {
+  var d = [{"coords": [[39.9042, 116.4074], [39.0842, 117.201]], "popup": "北京 → 天津"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2008);
+  });
+})();
+(function() {
+  var d = [{"coords": [[38.0428, 114.5149], [37.8706, 112.5489]], "popup": "石家庄 → 太原"}, {"coords": [[31.8206, 117.2272], [30.5928, 114.3055]], "popup": "合肥 → 武汉"}, {"coords": [[29.8683, 121.544], [28.02, 120.65]], "popup": "宁波 → 温州"}, {"coords": [[28.02, 120.65], [26.0745, 119.2965]], "popup": "温州 → 福州"}, {"coords": [[30.5928, 114.3055], [28.2282, 112.9388], [26.89, 112.59], [23.1291, 113.2644]], "popup": "武汉 → 长沙 → 衡阳 → 广州"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2009);
+  });
+})();
+(function() {
+  var d = [{"coords": [[34.7466, 113.6253], [34.6187, 112.454], [34.3416, 108.9398]], "popup": "郑州 → 洛阳 → 西安"}, {"coords": [[26.0745, 119.2965], [24.4798, 118.0894]], "popup": "福州 → 厦门"}, {"coords": [[31.2304, 121.4737], [31.2989, 120.5853], [32.0603, 118.7969]], "popup": "上海 → 苏州 → 南京"}, {"coords": [[28.682, 115.8579], [29.7051, 116.0019]], "popup": "南昌 → 九江"}, {"coords": [[31.2304, 121.4737], [30.2741, 120.1551]], "popup": "上海 → 杭州"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2010);
+  });
+})();
+(function() {
+  var d = [{"coords": [[39.9042, 116.4074], [39.0842, 117.201], [36.6512, 117.1201], [35.59, 116.98], [34.261, 117.1848], [32.0603, 118.7969], [31.2989, 120.5853], [31.2304, 121.4737]], "popup": "北京 → 天津 → 济南 → 曲阜 → 徐州 → 南京 → 苏州 → 上海"}, {"coords": [[23.1291, 113.2644], [22.5431, 114.0579]], "popup": "广州 → 深圳"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2011);
+  });
+})();
+(function() {
+  var d = [{"coords": [[45.8038, 126.535], [43.8171, 125.3235], [41.8057, 123.4315], [38.914, 121.6147]], "popup": "哈尔滨 → 长春 → 沈阳 → 大连"}, {"coords": [[39.9042, 116.4074], [39.05, 115.9], [38.0428, 114.5149], [34.7466, 113.6253], [30.5928, 114.3055]], "popup": "北京 → 雄安 → 石家庄 → 郑州 → 武汉"}, {"coords": [[32.0603, 118.7969], [30.2741, 120.1551]], "popup": "南京 → 杭州"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2012);
+  });
+})();
+(function() {
+  var d = [{"coords": [[32.0603, 118.7969], [30.2741, 120.1551]], "popup": "南京 → 杭州"}, {"coords": [[30.2741, 120.1551], [29.8683, 121.544]], "popup": "杭州 → 宁波"}, {"coords": [[39.0842, 117.201], [39.6292, 118.1802], [39.93, 119.59]], "popup": "天津 → 唐山 → 秦皇岛"}, {"coords": [[24.4798, 118.0894], [23.35, 116.68], [22.5431, 114.0579]], "popup": "厦门 → 汕头 → 深圳"}, {"coords": [[34.3416, 108.9398], [34.363, 107.237]], "popup": "西安 → 宝鸡"}, {"coords": [[29.563, 106.5516], [30.2943, 108.9388]], "popup": "重庆 → 利川"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2013);
+  });
+})();
+(function() {
+  var d = [{"coords": [[30.5728, 104.0668], [29.5823, 103.7665]], "popup": "成都 → 乐山"}, {"coords": [[36.0611, 103.8343], [43.8256, 87.6168]], "popup": "兰州 → 乌鲁木齐"}, {"coords": [[26.647, 106.6302], [25.2742, 110.2993], [23.1291, 113.2644]], "popup": "贵阳 → 桂林 → 广州"}, {"coords": [[22.817, 108.3665], [23.1291, 113.2644]], "popup": "南宁 → 广州"}, {"coords": [[36.0671, 120.3826], [37.1, 122.41]], "popup": "青岛 → 荣成"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2014);
+  });
+})();
+(function() {
+  var d = [{"coords": [[31.8206, 117.2272], [29.7147, 118.3375], [26.0745, 119.2965]], "popup": "合肥 → 黄山 → 福州"}, {"coords": [[45.8038, 126.535], [47.3543, 123.9179]], "popup": "哈尔滨 → 齐齐哈尔"}, {"coords": [[41.8057, 123.4315], [40.1272, 124.3764]], "popup": "沈阳 → 丹东"}, {"coords": [[43.8378, 126.5494], [42.87, 130.35]], "popup": "吉林 → 珲春"}, {"coords": [[39.0842, 117.201], [39.02, 117.72]], "popup": "天津 → 滨海新区"}, {"coords": [[30.5728, 104.0668], [29.5808, 105.058], [29.563, 106.5516]], "popup": "成都 → 内江 → 重庆"}, {"coords": [[20.044, 110.1999], [18.2208, 109.5028]], "popup": "海口 → 三亚"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2015);
+  });
+})();
+(function() {
+  var d = [{"coords": [[34.7466, 113.6253], [34.4422, 115.6478], [34.261, 117.1848]], "popup": "郑州 → 商丘 → 徐州"}, {"coords": [[28.2282, 112.9388], [26.647, 106.6302], [25.0389, 102.7183]], "popup": "长沙 → 贵阳 → 昆明"}, {"coords": [[22.817, 108.3665], [25.0389, 102.7183]], "popup": "南宁 → 昆明"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2016);
+  });
+})();
+(function() {
+  var d = [{"coords": [[34.363, 107.237], [36.0611, 103.8343]], "popup": "宝鸡 → 兰州"}, {"coords": [[30.5928, 114.3055], [29.7051, 116.0019]], "popup": "武汉 → 九江"}, {"coords": [[34.3416, 108.9398], [30.5728, 104.0668]], "popup": "西安 → 成都"}, {"coords": [[38.0428, 114.5149], [36.6512, 117.1201]], "popup": "石家庄 → 济南"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2017);
+  });
+})();
+(function() {
+  var d = [{"coords": [[22.5431, 114.0579], [22.3193, 114.1694]], "popup": "深圳 → 香港"}, {"coords": [[30.2741, 120.1551], [29.7147, 118.3375]], "popup": "杭州 → 黄山"}, {"coords": [[36.6512, 117.1201], [36.7089, 119.1619], [36.0671, 120.3826]], "popup": "济南 → 潍坊 → 青岛"}, {"coords": [[27.58, 109.98], [26.89, 112.59]], "popup": "怀化 → 衡阳"}, {"coords": [[40.97, 117.94], [41.8057, 123.4315]], "popup": "承德 → 沈阳"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2018);
+  });
+})();
+(function() {
+  var d = [{"coords": [[35.42, 119.46], [35.59, 116.98]], "popup": "日照 → 曲阜"}, {"coords": [[30.58, 114.28], [32.65, 110.78]], "popup": "汉口 → 十堰"}, {"coords": [[34.4422, 115.6478], [32.89, 115.81], [31.8206, 117.2272]], "popup": "商丘 → 阜阳 → 合肥"}, {"coords": [[34.7466, 113.6253], [32.89, 115.81]], "popup": "郑州 → 阜阳"}, {"coords": [[30.5728, 104.0668], [28.7667, 104.6167], [26.647, 106.6302]], "popup": "成都 → 宜宾 → 贵阳"}, {"coords": [[28.682, 115.8579], [25.8311, 114.9348]], "popup": "南昌 → 赣州"}, {"coords": [[39.9042, 116.4074], [40.825, 114.885]], "popup": "北京 → 张家口"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2019);
+  });
+})();
+(function() {
+  var d = [{"coords": [[34.7466, 113.6253], [37.8706, 112.5489]], "popup": "郑州 → 太原"}, {"coords": [[31.8206, 117.2272], [30.5319, 117.1151]], "popup": "合肥 → 安庆"}, {"coords": [[38.4872, 106.2309], [34.3416, 108.9398]], "popup": "银川 → 西安"}, {"coords": [[39.9042, 116.4074], [39.05, 115.9]], "popup": "北京 → 雄安"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2020);
+  });
+})();
+(function() {
+  var d = [{"coords": [[39.9042, 116.4074], [40.97, 117.94], [41.8057, 123.4315]], "popup": "北京 → 承德 → 沈阳"}, {"coords": [[34.261, 117.1848], [34.6004, 119.1792]], "popup": "徐州 → 连云港"}, {"coords": [[29.1171, 110.4792], [27.58, 109.98]], "popup": "张家界 → 怀化"}, {"coords": [[44.5514, 129.633], [46.8139, 130.3467]], "popup": "牡丹江 → 佳木斯"}, {"coords": [[25.8311, 114.9348], [22.5431, 114.0579]], "popup": "赣州 → 深圳"}, {"coords": [[35.59, 116.98], [35.13, 115.48]], "popup": "曲阜 → 庄寨"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2021);
+  });
+})();
+(function() {
+  var d = [{"coords": [[36.6512, 117.1201], [35.71, 115.01]], "popup": "济南 → 濮阳"}, {"coords": [[32.0, 112.15], [30.83, 108.32]], "popup": "襄阳 → 万州"}, {"coords": [[39.9042, 116.4074], [39.05, 115.9], [38.0428, 114.5149], [34.7466, 113.6253], [30.5928, 114.3055]], "popup": "北京 → 雄安 → 石家庄 → 郑州 → 武汉"}, {"coords": [[30.86, 120.11], [30.2741, 120.1551]], "popup": "湖州 → 杭州"}, {"coords": [[24.4, 103.4333], [23.33, 103.43]], "popup": "弥勒 → 蒙自"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2022);
+  });
+})();
+(function() {
+  var d = [{"coords": [[26.647, 106.6302], [22.817, 108.3665]], "popup": "贵阳 → 南宁"}, {"coords": [[26.0745, 119.2965], [24.4798, 118.0894]], "popup": "福州 → 厦门"}, {"coords": [[32.0603, 118.7969], [31.5167, 121.1167]], "popup": "南京 → 太仓"}, {"coords": [[36.6512, 117.1201], [34.7466, 113.6253]], "popup": "济南 → 郑州"}, {"coords": [[30.5728, 104.0668], [28.7667, 104.6167]], "popup": "成都 → 宜宾"}, {"coords": [[23.35, 116.68], [22.8, 115.35]], "popup": "汕头 → 汕尾"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2023);
+  });
+})();
+(function() {
+  var d = [{"coords": [[30.66, 117.48], [29.7147, 118.3375]], "popup": "池州 → 黄山"}, {"coords": [[36.7089, 119.1619], [37.4638, 121.4481]], "popup": "潍坊 → 烟台"}, {"coords": [[31.2304, 121.4737], [31.2989, 120.5853], [30.86, 120.11]], "popup": "上海 → 苏州 → 湖州"}, {"coords": [[22.817, 108.3665], [22.63, 110.15]], "popup": "南宁 → 玉林"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2024);
+  });
+})();
+(function() {
+  var d = [{"coords": [[34.3416, 108.9398], [36.6056, 109.4644]], "popup": "西安 → 延安"}, {"coords": [[30.2741, 120.1551], [28.9359, 118.8743]], "popup": "杭州 → 衢州"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#666666', weight: 1.8, opacity: 0.5})
+      .bindPopup(r.popup).addTo(histGroup2025);
+  });
+})();
+
+
+var predGroup2026 = L.layerGroup();
+overlayLayers['2026年 预测 (5条)'] = predGroup2026;
+var predGroup2027 = L.layerGroup();
+overlayLayers['2027年 预测 (5条)'] = predGroup2027;
+var predGroup2028 = L.layerGroup();
+overlayLayers['2028年 预测 (5条)'] = predGroup2028;
+var predGroup2029 = L.layerGroup();
+overlayLayers['2029年 预测 (5条)'] = predGroup2029;
+var predGroup2030 = L.layerGroup();
+overlayLayers['2030年 预测 (5条)'] = predGroup2030;
+
+(function() {
+  var d = [{"coords": [[39.0842, 117.201], [39.02, 117.72], [36.7089, 119.1619]], "popup": "预测: 天津 → 滨海新区 → 潍坊"}, {"coords": [[39.9042, 116.4074], [39.05, 115.9], [39.0842, 117.201], [39.02, 117.72], [36.8135, 118.055]], "popup": "预测: 北京 → 雄安 → 天津 → 滨海新区 → 淄博"}, {"coords": [[39.9042, 116.4074], [39.02, 117.72], [39.6292, 118.1802], [39.93, 119.59], [38.914, 121.6147]], "popup": "预测: 北京 → 滨海新区 → 唐山 → 秦皇岛 → 大连"}, {"coords": [[39.9042, 116.4074], [39.05, 115.9], [39.0842, 117.201], [39.02, 117.72], [36.8135, 118.055], [36.7089, 119.1619]], "popup": "预测: 北京 → 雄安 → 天津 → 滨海新区 → 淄博 → 潍坊"}, {"coords": [[34.7466, 113.6253], [34.7972, 114.3076], [34.4422, 115.6478], [32.89, 115.81], [31.8206, 117.2272]], "popup": "预测: 郑州 → 开封 → 商丘 → 阜阳 → 合肥"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#e41a1c', weight: 2.5, opacity: 0.8, dashArray: '6 4'})
+      .bindPopup(r.popup).addTo(predGroup2026);
+  });
+})();
+(function() {
+  var d = [{"coords": [[30.5928, 114.3055], [30.1997, 115.0389], [30.5319, 117.1151], [30.66, 117.48], [29.7147, 118.3375], [30.2741, 120.1551]], "popup": "预测: 武汉 → 黄石 → 安庆 → 池州 → 黄山 → 杭州"}, {"coords": [[29.563, 106.5516], [27.7254, 106.9274], [26.647, 106.6302]], "popup": "预测: 重庆 → 遵义 → 贵阳"}, {"coords": [[31.2304, 121.4737], [31.5167, 121.1167], [31.2989, 120.5853], [32.3932, 119.421], [33.6104, 119.0158]], "popup": "预测: 上海 → 太仓 → 苏州 → 扬州 → 淮安"}, {"coords": [[23.1291, 113.2644], [22.3193, 114.1694], [22.8, 115.35], [24.4798, 118.0894], [24.8744, 118.6757], [25.4541, 119.0077], [26.0745, 119.2965]], "popup": "预测: 广州 → 香港 → 汕尾 → 厦门 → 泉州 → 莆田 → 福州"}, {"coords": [[39.0842, 117.201], [36.6512, 117.1201], [36.7089, 119.1619], [35.59, 116.98], [35.1046, 118.3564]], "popup": "预测: 天津 → 济南 → 潍坊 → 曲阜 → 临沂"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#e41a1c', weight: 2.5, opacity: 0.8, dashArray: '6 4'})
+      .bindPopup(r.popup).addTo(predGroup2027);
+  });
+})();
+(function() {
+  var d = [{"coords": [[29.563, 106.5516], [29.5335, 108.7707], [30.83, 108.32], [30.6919, 111.2864], [32.65, 110.78], [34.4996, 109.5098], [34.6187, 112.454], [34.7466, 113.6253]], "popup": "预测: 重庆 → 黔江 → 万州 → 宜昌 → 十堰 → 渭南 → 洛阳 → 郑州"}, {"coords": [[39.0842, 117.201], [36.8135, 118.055], [36.6512, 117.1201], [35.59, 116.98], [35.71, 115.01], [35.13, 115.48], [32.89, 115.81], [30.5928, 114.3055]], "popup": "预测: 天津 → 淄博 → 济南 → 曲阜 → 濮阳 → 庄寨 → 阜阳 → 武汉"}, {"coords": [[39.0842, 117.201], [39.05, 115.9], [38.0428, 114.5149], [37.8706, 112.5489]], "popup": "预测: 天津 → 雄安 → 石家庄 → 太原"}, {"coords": [[32.0603, 118.7969], [32.3932, 119.421], [31.2989, 120.5853], [30.2741, 120.1551], [29.8683, 121.544]], "popup": "预测: 南京 → 扬州 → 苏州 → 杭州 → 宁波"}, {"coords": [[30.5928, 114.3055], [30.9279, 113.9109], [30.3352, 112.2396], [32.0, 112.15], [32.65, 110.78], [34.3416, 108.9398]], "popup": "预测: 武汉 → 孝感 → 荆州 → 襄阳 → 十堰 → 西安"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#e41a1c', weight: 2.5, opacity: 0.8, dashArray: '6 4'})
+      .bindPopup(r.popup).addTo(predGroup2028);
+  });
+})();
+(function() {
+  var d = [{"coords": [[39.9042, 116.4074], [39.05, 115.9], [39.02, 117.72], [36.6512, 117.1201], [33.6104, 119.0158], [32.3932, 119.421], [31.2304, 121.4737], [30.2741, 120.1551]], "popup": "预测: 北京 → 雄安 → 滨海新区 → 济南 → 淮安 → 扬州 → 上海 → 杭州"}, {"coords": [[39.0842, 117.201], [36.6512, 117.1201], [38.0428, 114.5149], [34.7972, 114.3076], [34.7466, 113.6253], [34.6187, 112.454], [30.83, 108.32], [29.563, 106.5516]], "popup": "预测: 天津 → 济南 → 石家庄 → 开封 → 郑州 → 洛阳 → 万州 → 重庆"}, {"coords": [[29.563, 106.5516], [30.2943, 108.9388], [29.1171, 110.4792], [30.3352, 112.2396], [30.1997, 115.0389], [30.5319, 117.1151], [29.7147, 118.3375], [30.2741, 120.1551]], "popup": "预测: 重庆 → 利川 → 张家界 → 荆州 → 黄石 → 安庆 → 黄山 → 杭州"}, {"coords": [[23.1291, 113.2644], [22.8, 115.35], [23.35, 116.68], [25.8311, 114.9348], [28.682, 115.8579], [28.9359, 118.8743], [28.02, 120.65], [30.2741, 120.1551]], "popup": "预测: 广州 → 汕尾 → 汕头 → 赣州 → 南昌 → 衢州 → 温州 → 杭州"}, {"coords": [[29.563, 106.5516], [29.5808, 105.058], [28.7667, 104.6167], [27.7254, 106.9274], [26.647, 106.6302], [26.2533, 105.9476]], "popup": "预测: 重庆 → 内江 → 宜宾 → 遵义 → 贵阳 → 安顺"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#e41a1c', weight: 2.5, opacity: 0.8, dashArray: '6 4'})
+      .bindPopup(r.popup).addTo(predGroup2029);
+  });
+})();
+(function() {
+  var d = [{"coords": [[29.563, 106.5516], [29.5335, 108.7707], [27.58, 109.98], [25.2742, 110.2993], [23.0467, 112.4659], [23.0218, 113.1219], [23.0473, 113.7518], [22.3193, 114.1694]], "popup": "预测: 重庆 → 黔江 → 怀化 → 桂林 → 肇庆 → 佛山 → 东莞 → 香港"}, {"coords": [[31.2304, 121.4737], [30.7461, 120.7555], [30.2741, 120.1551], [29.0791, 119.6494], [26.0745, 119.2965], [25.8311, 114.9348], [22.8, 115.35], [23.1291, 113.2644]], "popup": "预测: 上海 → 嘉兴 → 杭州 → 金华 → 福州 → 赣州 → 汕尾 → 广州"}, {"coords": [[31.8206, 117.2272], [30.66, 117.48], [30.5319, 117.1151], [29.7051, 116.0019], [30.1997, 115.0389], [30.5928, 114.3055], [28.2282, 112.9388]], "popup": "预测: 合肥 → 池州 → 安庆 → 九江 → 黄石 → 武汉 → 长沙"}, {"coords": [[31.8206, 117.2272], [30.86, 120.11], [30.2741, 120.1551], [30.7461, 120.7555], [29.8683, 121.544]], "popup": "预测: 合肥 → 湖州 → 杭州 → 嘉兴 → 宁波"}, {"coords": [[30.5928, 114.3055], [32.89, 115.81], [34.261, 117.1848]], "popup": "预测: 武汉 → 阜阳 → 徐州"}];
+  d.forEach(function(r) {
+    L.polyline(r.coords, {color: '#e41a1c', weight: 2.5, opacity: 0.8, dashArray: '6 4'})
+      .bindPopup(r.popup).addTo(predGroup2030);
+  });
+})();
+
+L.control.layers(null, overlayLayers, {position: 'topright', collapsed: false}).addTo(map);
+}
+</script>
+</body>
+</html>
